@@ -47,34 +47,35 @@ CLASSIFIERS = [
 PYTHON_REQUIRES = ">=3.7"
 
 INSTALL_REQUIRES = [
-    "Flask",
-    "SQLAlchemy[mysql,pymysql]",
+    # "Flask",
+    "SQLAlchemy", #[mysql,pymysql]
     "boto3",
-    "catalogue>=2.0.3",  # see https://github.com/explosion/catalogue/issues/17
+    # "catalogue>=2.0.3",  # see https://github.com/explosion/catalogue/issues/17
     # Required to encrypt mysql password; >= 3.2 to fix RSA decryption vulnerability
-    "cryptography>=3.2",
+    # "cryptography>=3.2",
     "defusedxml",
     "elasticsearch>=8",
     "google-cloud-storage",
-    "h5py",
-    "ipython",
-    "ipywidgets",
-    "jupyterlab>=3",
-    "langdetect",
+    # "h5py",
+    # "ipython",
+    # "ipywidgets",
+    # "jupyterlab>=3",
+    # "langdetect",
     "luigi",
     # Serialization framework on top of dataclasses, e.g. 'Article' to and from JSON.
     "mashumaro>=3.0",
-    "numpy>=1.20.1",
+    # "numpy>=1.20.1",
     "pandas>=1",
-    "pg8000",
+    # "pg8000",
     "python-dotenv",
-    "requests",
-    "scikit-learn",
-    "sentence-transformers",
+    # "requests",
+    # "scikit-learn",
+    # "sentence-transformers",
     # >= 3.0.6 to include the fix for https://github.com/explosion/spaCy/pull/7603.
-    "spacy[transformers]>=3.0.6",
+    # "spacy[transformers]>=3.0.6",
     # torch==1.9.0 contains patch allowing reproducible saving of models
-    "torch>=1.9.0",
+    # "torch>=1.9.0",
+    "tqdm",
 ]
 
 EXTRAS_REQUIRE = {
