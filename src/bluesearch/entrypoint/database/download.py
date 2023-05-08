@@ -197,12 +197,12 @@ def run(
         return 0
     elif article_source in {ArticleSource.BIORXIV, ArticleSource.MEDRXIV}:
 
-        key_id = getpass.getpass("aws_access_key_id: ")
-        secret_access_key = getpass.getpass("aws_secret_access_key: ")
+        # key_id = getpass.getpass("aws_access_key_id: ")
+        # secret_access_key = getpass.getpass("aws_secret_access_key: ")
 
         session = boto3.Session(
-            aws_access_key_id=key_id,
-            aws_secret_access_key=secret_access_key,
+            # aws_access_key_id=key_id,
+            # aws_secret_access_key=secret_access_key,
         )
         resource = session.resource("s3")
         bucket = resource.Bucket(f"{source}-src-monthly")
