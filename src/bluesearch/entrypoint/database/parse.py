@@ -22,7 +22,6 @@ import gzip
 import json
 import logging
 import sys
-import warnings
 from pathlib import Path
 from typing import Iterator
 
@@ -205,26 +204,22 @@ def run(
 
     output_dir.mkdir(exist_ok=True)
 
+    uids = set()
     for input_path in inputs:
-        logger.info(f"Parsing {input_path.name}")
-
         try:
-            parsers = iter_parsers(input_type, input_path)
-
-            for parser in parsers:
+            for parser in iter_parsers(input_type, input_path):
                 article = Article.parse(parser)
-                output_file = output_dir / f"{article.uid}.json"
-
-                if output_file.exists():
-                    raise FileExistsError(f"Output '{output_file}' already exists!")
+                uid = article.uid
+                output_file = output_dir / f"{input_path.name}.json"
+                if uid in uids or output_file.exists():
+                    logger.warning(f"Output '{output_file}' already exists!")
                 else:
                     serialized = article.to_json()
                     output_file.write_text(serialized, "utf-8")
-
+                    uids.add(uid)
+                    logger.info(f"Parsed {input_path.name} to {output_file.name}")
         except Exception as e:
-            warnings.warn(
-                f'Failed parsing file "{input_path}":\n {e}', category=RuntimeWarning
-            )
+            logger.error(f'Failed parsing file "{input_path}": {e}')
 
     logger.info("Parsing done")
 
