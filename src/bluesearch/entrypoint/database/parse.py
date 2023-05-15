@@ -206,18 +206,21 @@ def run(
 
     uids = set()
     for input_path in inputs:
+        output_file = output_dir / f"{input_path.name}.json"
+        if output_file.exists():
+            logger.warning(f"Output '{output_file}' already exists!")
+            continue
         try:
             for parser in iter_parsers(input_type, input_path):
                 article = Article.parse(parser)
                 uid = article.uid
-                output_file = output_dir / f"{input_path.name}.json"
-                if uid in uids or output_file.exists():
-                    logger.warning(f"Output '{output_file}' already exists!")
-                else:
-                    serialized = article.to_json()
-                    output_file.write_text(serialized, "utf-8")
-                    uids.add(uid)
-                    logger.info(f"Parsed {input_path.name} to {output_file.name}")
+                if uid in uids:
+                    logger.warning(f"UID '{uid}' already exists!")
+                    continue
+                serialized = article.to_json()
+                output_file.write_text(serialized, "utf-8")
+                uids.add(uid)
+                logger.info(f"Parsed {input_path.name} to {output_file.name}")
         except Exception as e:
             logger.error(f'Failed parsing file "{input_path}": {e}')
 
